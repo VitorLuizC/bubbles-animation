@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "watch": "onchange './src/**/*.ts' -i -- npm run build",
-    "build": "bili ./src/index.ts -o --plugins typescript2 ./dist"
+    "build": "bili ./src/index.ts -o --plugins typescript2 ./dist",
+    "serve": "poi ./docs",
+    "start": "concurrently \"npm run watch\" && \"npm run serve\""
   },
   "main": "dist/bubbles-animation.common.js",
   "devDependencies": {
