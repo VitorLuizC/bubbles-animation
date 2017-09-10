@@ -1,0 +1,13 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log.*
+
+# Cache
+.rpt2_cache/
+
+# Visual Studio Code settings
+.vscode/

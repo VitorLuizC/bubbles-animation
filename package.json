@@ -1,0 +1,21 @@
+{
+  "name": "bubbles-animation",
+  "version": "0.1.0",
+  "description": "Simple <canvas> bubbles animation.",
+  "repository": "https://github.com/VitorLuizC/bubbles-animation",
+  "author": "Vitor Cavalcanti <vitorluizc@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "watch": "onchange './src/**/*.ts' -i -- npm run build",
+    "build": "bili ./src/index.ts -o --plugins typescript2 ./dist"
+  },
+  "main": "dist/bubbles-animation.common.js",
+  "devDependencies": {
+    "bili": "^0.18.1",
+    "concurrently": "^3.5.0",
+    "onchange": "^3.2.1",
+    "poi": "^9.3.5",
+    "rollup-plugin-typescript2": "^0.5.2",
+    "typescript": "^2.5.2"
+  }
+}
