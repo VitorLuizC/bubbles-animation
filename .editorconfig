@@ -10,6 +10,6 @@ root = true
   trim_trailing_whitespace = true
 
 # Sources settings
-[*.ts]
+[*.{js,ts,vue}]
   tab_width = 2
   indent_style = tab
