@@ -16,8 +16,8 @@
   "license": "MIT",
   "scripts": {
     "watch": "onchange './src/**/*.ts' -i -- npm run build",
-    "build": "bili ./src/index.ts -o ./dist --plugins typescript2",
-    "serve": "poi ./docs",
+    "build": "bili ./src/index.ts -o ./dist --plugins typescript2 --format cjs --format es --format umd --minify umd",
+    "serve": "poi ./test",
     "start": "concurrently \"npm run watch\" \"npm run serve\""
   },
   "main": "dist/bubbles-animation.common.js",
