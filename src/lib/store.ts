@@ -3,28 +3,23 @@ import { Bubble, Axis, createBubbles, drawBubble } from './bubbles'
 import { NumberRange, ColorRange } from './range'
 
 export interface State {
-	isMoving: boolean,
 	isSkiping: boolean,
 	ticks: number,
 	interval: number,
-	position?: Axis,
 	waiting?: number,
 	bubbles: Bubble[],
 	width: number,
 	height: number,
 	quantity: NumberRange,
-	accuracy: number,
 	size: NumberRange,
 	color: ColorRange
 };
 
 export const createState = (options: Options): State => ({
-	isMoving: false,
 	isSkiping: false,
 	ticks: 0,
 	interval: 1,
 	bubbles: [],
-	accuracy: 50,
 	width: 0,
 	height: 0,
 	size: [50, 100],
@@ -56,14 +51,5 @@ export const actions = {
 	changeSize: (state: State, { width, height }: { width: number, height: number}) => {
 		state.width = width;
 		state.height = height;
-	},
-	changePosition: (state: State, x: number, y: number) => {
-		if (state.waiting) clearTimeout(state.waiting);
-		state.position = { x, y };
-		state.isMoving = true;
-		state.waiting = setTimeout(() => {
-			state.isMoving = false;
-			state.position = null;
-		}, 1000);
 	}
 };

@@ -57,12 +57,8 @@ var createBubble = function (state) {
         size: getNumber(state.size),
         color: getColor(state.color),
         position: {
-            x: state.position
-                ? getNumber([state.position.x - state.accuracy, state.position.x + state.accuracy])
-                : getNumber([0, state.width]),
-            y: state.position
-                ? getNumber([state.position.y - state.accuracy, state.position.y + state.accuracy])
-                : getNumber([0, state.height])
+            x: getNumber([0, state.width]),
+            y: getNumber([0, state.height])
         }
     };
     return bubble;
@@ -85,7 +81,7 @@ var drawBubble = function (context, bubble) {
     context.closePath();
 };
 
-var createState = function (options) { return (__assign({ isMoving: false, isSkiping: false, ticks: 0, interval: 1, bubbles: [], accuracy: 50, width: 0, height: 0, size: [50, 100], quantity: 1, color: { R: [0, 255], G: [0, 255], B: [0, 255], A: .5 } }, options)); };
+var createState = function (options) { return (__assign({ isSkiping: false, ticks: 0, interval: 1, bubbles: [], width: 0, height: 0, size: [50, 100], quantity: 1, color: { R: [0, 255], G: [0, 255], B: [0, 255], A: .5 } }, options)); };
 var actions = {
     countTickets: function (state) {
         state.isSkiping = state.ticks <= state.interval;
@@ -109,16 +105,6 @@ var actions = {
         var width = _a.width, height = _a.height;
         state.width = width;
         state.height = height;
-    },
-    changePosition: function (state, x, y) {
-        if (state.waiting)
-            clearTimeout(state.waiting);
-        state.position = { x: x, y: y };
-        state.isMoving = true;
-        state.waiting = setTimeout(function () {
-            state.isMoving = false;
-            state.position = null;
-        }, 1000);
     }
 };
 
@@ -142,13 +128,6 @@ var index = function (target, options) {
     resize(element, state);
     animate(context, state);
     window.addEventListener('resize', function () { return resize(element, state); });
-    window.addEventListener('mousemove', function (event) {
-        var _a = element.getBoundingClientRect(), top = _a.top, left = _a.left, width = _a.width, height = _a.height;
-        var x = event.clientX, y = event.clientY;
-        var isOver = y >= top && y <= top + height && x >= left && x <= left + width;
-        if (isOver)
-            actions.changePosition(state, x, y);
-    });
 };
 
 module.exports = index;

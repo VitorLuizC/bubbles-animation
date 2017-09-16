@@ -22,12 +22,8 @@ export const createBubble = (state: State): Bubble => {
 		size: getNumber(state.size),
 		color: getColor(state.color),
 		position: {
-			x: state.position
-				? getNumber([state.position.x - state.accuracy, state.position.x + state.accuracy])
-				: getNumber([0, state.width]),
-			y: state.position
-				? getNumber([state.position.y - state.accuracy, state.position.y + state.accuracy])
-				: getNumber([0, state.height])
+			x: getNumber([0, state.width]),
+			y: getNumber([0, state.height])
 		}
 	};
 

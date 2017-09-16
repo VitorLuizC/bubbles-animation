@@ -21,7 +21,6 @@ const resize = (element: HTMLCanvasElement, state: State) => {
 export interface Options {
 	interval?: number,
 	quantity?: NumberRange,
-	accuracy?: number,
 	size?: NumberRange,
 	color?: ColorRange
 };
@@ -35,10 +34,4 @@ export default (target: Target, options: Options) => {
 	animate(context, state);
 
 	window.addEventListener('resize', () => resize(element, state));
-	window.addEventListener('mousemove', (event) => {
-		const { top, left, width, height } = element.getBoundingClientRect();
-		const { clientX: x, clientY: y } = event;
-		const isOver = y >= top && y <= top + height && x >= left && x <= left + width;
-		if (isOver) actions.changePosition(state, x, y);
-	});
 };
