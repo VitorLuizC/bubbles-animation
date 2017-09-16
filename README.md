@@ -2,6 +2,8 @@
 
 Simple `<canvas>` bubbles animation.
 
+See this [demo][1].
+
 ## Getting Started
 
 - Install from NPM;
@@ -37,3 +39,4 @@ animate(document.querySelector('canvas'), {
 Detailed changes for each release are documented in the [release notes][0].
 
 [0]: https://github.com/VitorLuizC/bubbles-animation/releases
+[1]: https://codepen.io/VitorLuizC/pen/EwVPeP
