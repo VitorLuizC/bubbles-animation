@@ -3,7 +3,16 @@
   "version": "0.1.0",
   "description": "Simple <canvas> bubbles animation.",
   "repository": "https://github.com/VitorLuizC/bubbles-animation",
-  "author": "Vitor Cavalcanti <vitorluizc@outlook.com>",
+  "homepage": "https://github.com/VitorLuizC/bubbles-animation",
+  "bugs": {
+    "email": "vitorluizc@outlook.com",
+    "url": "https://github.com/VitorLuizC/bubbles-animation/issues"
+  },
+  "author": {
+    "url": "https://vitorluizc.github.io/",
+    "name": "Vitor Cavalcanti",
+    "email": "vitorluizc@outlook.com"
+  },
   "license": "MIT",
   "scripts": {
     "watch": "onchange './src/**/*.ts' -i -- npm run build",
