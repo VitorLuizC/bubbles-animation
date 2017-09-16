@@ -21,6 +21,7 @@
     "start": "concurrently \"npm run watch\" \"npm run serve\""
   },
   "main": "dist/bubbles-animation.common.js",
+  "module": "dist/bubbles-animation.es.js",
   "devDependencies": {
     "bili": "^0.18.1",
     "concurrently": "^3.5.0",
