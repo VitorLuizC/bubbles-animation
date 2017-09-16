@@ -1,97 +1,44 @@
-import { getElement } from './lib/DOM';
-import { createState, State, move } from './lib/store';
+import getTarget, { Target } from './lib/target';
+import { createState, actions, State } from './lib/store';
+import { NumberRange, ColorRange } from './lib/range'
+import { drawBubble } from './lib/bubbles';
 
-const animate = (target: (string | HTMLCanvasElement)): void => {
-	const element = getElement(target) as HTMLCanvasElement;
-	const context = element.getContext('2d');
-	const state = createState();
+const run = window.requestAnimationFrame;
 
-	const run = (state: State) => () => {
-		requestAnimationFrame(run(animation(state)))
-	};
+const animate = (context: CanvasRenderingContext2D, state: State) => run(() => {
+	actions.changeBubbles(state, context);
+	actions.countTickets(state);
+	return animate(context, state);
+});
 
-	run(state);
-
-	resize(element);
-
-	window.addEventListener('resize', () => resize(element));
-	window.addEventListener('mousemove', ({ clientX: x, clientY: y }) => move(state, x, y));
+const resize = (element: HTMLCanvasElement, state: State) => {
+	const { clientWidth: width, clientHeight: height } = element.parentElement
+	element.width = width;
+	element.height = height;
+	actions.changeSize(state, { width, height });
 };
 
-// const animate = (selector, animation) => {
-//   const element = document.querySelector(selector)
-//   const context = element.getContext('2d')
-//   const run = (state) => () => {
-//     const next = animation(context, element, state)
-//     requestAnimationFrame(run(next))
-//   }
+export interface Options {
+	interval?: number,
+	quantity?: NumberRange,
+	accuracy?: number,
+	size?: NumberRange,
+	color?: ColorRange
+};
 
-//   window.addEventListener('resize', () => resize(element))
-//   resize(element)
+export default (target: Target, options: Options) => {
+	const element = getTarget(target);
+	const context = element.getContext('2d');
+	const state = createState(options);
 
-//   requestAnimationFrame(run())
-// }
+	resize(element, state);
+	animate(context, state);
 
-export default animate;
-
-const resize = (element: HTMLCanvasElement): void => {
-	const parent = element.parentElement;
-	element.width = parent.clientWidth;
-	element.height = parent.clientHeight;
-}
-
-const animation = (state: State): State => {
-	return state;
-}
-
-// const animation = (context, parent, state) => {
-//   state = state || { blocks: [], next: 0 }
-//   context.clearRect(0, 0, parent.width, parent.height)
-
-//   const generate = state.next === 0 || (state.next !== 0 && state.blocks.length < 10)
-
-//   state.blocks = (generate ? [ ...state.blocks, generateBlock(parent) ] : state.blocks)
-//     .map(block => {
-//       context.beginPath()
-//       context.arc(block.pos.x, block.pos.y, block.size, 0, 2 * Math.PI)
-//       context.strokeStyle = color.parse(block.color)
-//       context.fillStyle = color.parse(block.color)
-//       context.fill()
-//       context.closePath()
-//       block.color.alpha += -.015
-//       block.size += .25
-//       return block
-//     })
-//     .filter(block => block.color.alpha > 0)
-//   return state
-// }
-
-// const random = (max, min = 0) => ~~(Math.random() * (max - min) + min)
-// let moved = false
-// let waiting = null
-// const position = {
-//   x: 0,
-//   y: 0
-// };
-
-// const color = {
-//   generate: () => ({
-//     red: random(255, 75),
-//     green: 0,
-//     blue: random(255, 75),
-//     alpha: .75
-//   }),
-//   parse: ({ red, green, blue, alpha }) => {
-//     return `rgba(${red}, ${green}, ${blue}, ${alpha})`
-//   }
-// }
-
-// const generateBlock = (parent) => ({
-//   color: color.generate(),
-//   size: random(100),
-//   pos: {
-//     x: moved ? random(position.x - 100, position.x + 100) : random(parent.width),
-//     y: moved ? random(position.y - 100, position.y + 100) : random(parent.height)
-//   }
-// })
-
+	window.addEventListener('resize', () => resize(element, state));
+	window.addEventListener('mousemove', (event) => {
+		const { top, left, width, height } = element.getBoundingClientRect();
+		const { clientX: x, clientY: y } = event;
+		const isOver = y >= top && y <= top + height && x >= left && x <= left + width;
+		if (isOver) actions.changePosition(state, x, y);
+	});
+};
