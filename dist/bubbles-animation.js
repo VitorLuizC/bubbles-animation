@@ -78,7 +78,7 @@ var drawBubble = function (context, bubble) {
     var _a = bubble.color, R = _a.R, G = _a.G, B = _a.B, A = _a.A;
     var color = "rgba(" + R + ", " + G + ", " + B + ", " + A + ")";
     context.beginPath();
-    context.arc(bubble.position.x, bubble.position.y, bubble.size, 0, 2 * Math.PI);
+    context.arc(bubble.position.x, bubble.position.y, bubble.size / 2, 0, 2 * Math.PI);
     context.strokeStyle = color;
     context.fillStyle = color;
     context.fill();

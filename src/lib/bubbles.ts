@@ -42,7 +42,7 @@ export const drawBubble = (context: CanvasRenderingContext2D, bubble: Bubble) =>
 	const { R, G, B, A } = bubble.color;
 	const color = `rgba(${R}, ${G}, ${B}, ${A})`;
 	context.beginPath();
-	context.arc(bubble.position.x, bubble.position.y, bubble.size, 0, 2 * Math.PI);
+	context.arc(bubble.position.x, bubble.position.y, bubble.size / 2, 0, 2 * Math.PI);
 	context.strokeStyle = color;
 	context.fillStyle = color;
 	context.fill();
